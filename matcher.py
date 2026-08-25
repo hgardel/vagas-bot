@@ -1,20 +1,16 @@
 """
 Lógica de decisão: essa vaga interessa ou não, e qual a prioridade dela?
 
-Ordem de prioridade (do que você mais quer pro que você menos quer):
+Ordem de prioridade:
 1. Presencial em Ponta Grossa
-2. Home office em Ponta Grossa
-3. Home office em Curitiba
-4. Home office no resto do Paraná
-5. Home office em SC/SP/RS (estados vizinhos)
-6. Home office no resto do Brasil
+2. Híbrido em Ponta Grossa
+3. Home office em Ponta Grossa
+4. Home office em Curitiba
+5. Home office no resto do Brasil
 """
 import unicodedata
 import re
-from config import (
-    ALL_CYBER_KEYWORDS, KEYWORDS_ADS, EXCLUDE_KEYWORDS,
-    CIDADE_BASE_PRESENCIAL, UF_ESTADOS_VIZINHOS,
-)
+from config import ALL_CYBER_KEYWORDS, KEYWORDS_ADS, EXCLUDE_KEYWORDS, CIDADE_BASE_PRESENCIAL
 
 
 def _normalize(text: str) -> str:
@@ -31,9 +27,6 @@ def _contains_any(text: str, keywords: list) -> bool:
 
 
 def _contains_any_word(text: str, keywords: list) -> bool:
-    """Igual _contains_any, mas exige borda de palavra — corrige tanto falso
-    positivo ('sr' dentro de outra palavra) quanto falso negativo (termo no
-    fim da frase sem espaço depois, tipo 'Cibersegurança Sr')."""
     text_norm = _normalize(text)
     for kw in keywords:
         kw_norm = _normalize(kw).strip()
@@ -79,7 +72,6 @@ def _detect_modality(title: str, location: str, modality: str) -> str:
 def is_relevant(title: str, location: str, modality: str = "") -> tuple[bool, str]:
     location_norm = _normalize(location)
 
-    # 1. Descarta se tiver termo excluído (senior, pleno, etc)
     if _contains_any_word(title, EXCLUDE_KEYWORDS):
         return False, "excluido_por_senioridade"
 
@@ -90,42 +82,30 @@ def is_relevant(title: str, location: str, modality: str = "") -> tuple[bool, st
         return False, "titulo_nao_bate"
 
     modalidade_detectada = _detect_modality(title, location, modality)
-    esta_em_pg = _has_word(location_norm, "ponta grossa") or "ponta grossa" in location_norm
+    esta_em_pg = "ponta grossa" in location_norm
     esta_em_curitiba = _has_word(location_norm, "curitiba")
-    esta_no_pr = _has_word(location_norm, "pr")
     eh_brasil = _looks_brazilian(location)
 
-    # 2. Fora do Brasil? descarta (exceto se não houver pista nenhuma de país)
     if location.strip() and not eh_brasil:
         return False, "fora_do_brasil"
 
-    # 3. Híbrido: só serve se for em PG (envolve presença física periódica).
-    # Híbrido fora de PG viola a regra de "nunca presencial fora de PG".
-    if modalidade_detectada == "hibrido":
-        if esta_em_pg:
-            return True, "prioridade_1_presencial_pg"
-        return False, "hibrido_fora_de_pg"
-
-    # 4. REGRA DE OURO: presencial só serve se for em PG.
     if modalidade_detectada == "presencial":
         if esta_em_pg:
             return True, "prioridade_1_presencial_pg"
         return False, "presencial_fora_de_pg"
 
-    # 5. Remoto: aplica a escada de prioridade por proximidade.
+    if modalidade_detectada == "hibrido":
+        if esta_em_pg:
+            return True, "prioridade_2_hibrido_pg"
+        return False, "hibrido_fora_de_pg"
+
     if modalidade_detectada == "remoto" and is_cyber:
         if esta_em_pg:
-            return True, "prioridade_2_remoto_pg"
+            return True, "prioridade_3_remoto_pg"
         if esta_em_curitiba:
-            return True, "prioridade_3_remoto_curitiba"
-        if esta_no_pr:
-            return True, "prioridade_4_remoto_parana"
-        if any(_has_word(location_norm, uf) for uf in UF_ESTADOS_VIZINHOS):
-            return True, "prioridade_5_remoto_vizinhos"
-        return True, "prioridade_6_remoto_brasil"
+            return True, "prioridade_4_remoto_curitiba"
+        return True, "prioridade_5_remoto_brasil"
 
-    # 6. Modalidade desconhecida: avisa mesmo assim (só cyber, e só se
-    # parecer Brasil ou não tiver pista nenhuma de local).
     if modalidade_detectada == "desconhecido" and (is_cyber or (is_ads and esta_em_pg)):
         return True, "modalidade_desconhecida"
 

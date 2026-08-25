@@ -44,7 +44,7 @@ KEYWORDS_ADS = [
 # --- Termos NEGATIVOS (se aparecer no título, descarta) ---
 EXCLUDE_KEYWORDS = [
     "senior", "sênior", "sr.", "sr ", "sr",
-    "pleno", "lead", "especialista",
+    "pleno", "lead", "especialista", "mid-level", "mid level", "midlevel",
     "coordenador", "gerente", "gestor", "head",
     # área de segurança do trabalho/ocupacional é confundida com
     # segurança da informação por causa da palavra "segurança" sozinha
