@@ -23,7 +23,6 @@ def send_telegram(text: str) -> bool:
         print(f"[ERRO] Falha ao enviar mensagem no Telegram: {e}")
         return False
 
-
 def format_job_message(job: dict, motivo: str) -> str:
     prioridade_labels = {
         "prioridade_1_presencial_pg": "🥇 PRESENCIAL EM PG",
@@ -31,14 +30,14 @@ def format_job_message(job: dict, motivo: str) -> str:
         "prioridade_3_remoto_pg": "🥉 HOME OFFICE (Ponta Grossa)",
         "prioridade_4_remoto_curitiba": "4️⃣ HOME OFFICE (Curitiba)",
         "prioridade_5_remoto_brasil": "5️⃣ HOME OFFICE (resto do Brasil)",
-        "modalidade_desconhecida": "❓ CONFIRA O LOCAL/MODALIDADE NO LINK",
+        "modalidade_desconhecida": "❓ CONFIRA O LOCAL NO LINK ABAIXO:",
     }
     label = prioridade_labels.get(motivo, "")
     return (
         f"{label}\n"
-        f"<b>{job['title']}</b>\n"
+        f"💼<b>{job['title']}</b>\n"
         f"🏢 {job.get('company', 'N/A')}\n"
         f"📍 {job.get('location', 'N/A')}\n"
-        f"🔗 {job['url']}\n"
-        f"🌐 fonte: {job.get('source', 'N/A')}"
+        f"🌐 fonte: {job.get('source', 'N/A')}\n"
+        f"🔗 {job['url']}"
     )
