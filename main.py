@@ -4,7 +4,7 @@ from matcher import is_relevant
 from storage import load_seen, save_seen
 from notifier import send_telegram, format_job_message
 
-from scrapers import bne, linkedin, remoteok, remotar
+from scrapers import bne, linkedin, remoteok
 # Catho e Vagas.com.br removidos: ambos usam proteção Cloudflare que
 # bloqueia requisições automatizadas. Indeed também removido (403
 # constante). Ver README pra detalhes.
@@ -13,7 +13,7 @@ from scrapers import bne, linkedin, remoteok, remotar
 # Remotar: experimental, ainda não calibrado — se vier sempre "0 vagas
 # brutas" e o debug_html mostrar assinatura de Cloudflare, remova daqui.
 
-SCRAPERS = [bne, linkedin, remoteok, remotar]
+SCRAPERS = [bne, linkedin, remoteok]
 
 
 def main():
