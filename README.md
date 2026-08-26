@@ -1,9 +1,6 @@
-# Vagas Bot — Alerta de Vagas de Cibersegurança via Telegram
+# Vagas Bot - Alerta de Vagas de Cibersegurança via Telegram
 
-Bot que busca vagas de cibersegurança júnior em BNE, LinkedIn, RemoteOK e
-Remotar, filtra pelas suas regras e avisa no Telegram quando achar algo
-novo. Roda sozinho no GitHub Actions, de graça, 3x por dia (7:25, 11:25 e
-18:30 horário de Brasília) — não precisa do seu notebook ligado.
+Bot que busca vagas de cibersegurança júnior em BNE, LinkedIn, RemoteOK e Remotar, filtra pelas suas regras e avisa no Telegram quando achar algo novo. Roda sozinho no GitHub Actions, de graça, 6x por dia.
 
 ## Ordem de prioridade das vagas
 
