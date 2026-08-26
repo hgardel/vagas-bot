@@ -13,6 +13,10 @@ KEYWORDS_CYBER_PT = [
     "analista de segurança da informação",
     "segurança da informação",
     "analista soc",
+    "blue team",
+    "secops",
+    "security operations center",
+    "resposta a incidentes",
     "analista de ti",
 ]
 
@@ -21,6 +25,10 @@ KEYWORDS_CYBER_EN = [
     "security analyst",
     "information security analyst",
     "soc analyst",
+    "blue team analyst",
+    "secops analyst",
+    "incident response analyst",
+    "threat detection analyst",
     "cyber security analyst",
     "it security analyst",
     "junior cybersecurity",
