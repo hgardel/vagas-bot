@@ -49,7 +49,7 @@ secrets `TELEGRAM_TOKEN` e `TELEGRAM_CHAT_ID`.
 
 - **Catho**, **Vagas.com.br**: usam Cloudflare, bloqueiam requisição
   automatizada (confirmado pelo `__CF$cv$params` na resposta). Contornar
-  isso exigiria simular um navegador completo — não vale a pena.
+  isso exigiria simular um navegador completo, não vale a pena.
 - **Indeed**: bloqueio 403 constante, mesmo motivo.
-- **Remotar**: ainda experimental, pode ter o mesmo problema — confira o
+- **Remotar**: ainda experimental, pode ter o mesmo problema, confira o
   `debug_html/remotar.html` na primeira rodada.
