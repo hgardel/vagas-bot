@@ -89,3 +89,24 @@ HEADERS = {
     ),
     "Accept-Language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",
 }
+
+# --- LinkedIn: quantas páginas (de 10 resultados) buscar por termo+local ---
+# A API do LinkedIn só devolve 10 resultados por página, no parâmetro "start"
+# (0, 10, 20...). O bug antigo travava em start=0 sempre. Isso aqui controla
+# quantas páginas o scraper de LinkedIn vai tentar puxar por busca.
+LINKEDIN_MAX_PAGES = 5  # até 50 resultados por combinação de termo+local
+
+# --- InfoJobs ---
+# ID da província (estado) do Paraná no InfoJobs, confirmado por busca manual.
+# Se descobrir o ID de outro estado que queira adicionar, é só colocar aqui.
+INFOJOBS_PROVINCIA_PARANA = 179
+
+# Termos de busca específicos do InfoJobs (o site é mais literal que o
+# LinkedIn com a keyword, então valem termos separados dos de cima)
+INFOJOBS_SEARCH_TERMS = [
+    "cybersecurity",
+    "seguranca da informacao",
+    "blue team",
+    "soc analyst",
+    "analista de ciberseguranca",
+]
