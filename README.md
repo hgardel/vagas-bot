@@ -39,7 +39,7 @@ secrets `TELEGRAM_TOKEN` e `TELEGRAM_CHAT_ID`.
 ## Ajustando as regras
 
 - `config.py`: palavras-chave, cidades, exclusões
-- `matcher.py`: lógica de prioridade por proximidade
+- `matcher.py`: também aplica o filtro de senioridade (exclui vagas mid-level).
 - Pra adicionar um novo site: crie `scrapers/novosite.py` com uma função
   `scrape(debug=False)` retornando lista de dicts com `title`, `url`,
   `location`, `company`, `source` (e opcionalmente `modality`), e
