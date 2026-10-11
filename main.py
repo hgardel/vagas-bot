@@ -4,9 +4,9 @@ from matcher import is_relevant
 from storage import load_seen, save_seen
 from notifier import send_telegram, format_job_message
 
-from scrapers import linkedin, infojobs, gupy
+from scrapers import linkedin, infojobs
 
-SCRAPERS = [linkedin, infojobs, gupy]
+SCRAPERS = [linkedin, infojobs]
 
 
 def main():
