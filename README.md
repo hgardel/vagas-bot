@@ -5,11 +5,12 @@ Bot que busca vagas de cibersegurança júnior em LinkedIn e InfoJobs, filtra pe
 ## Ordem de prioridade das vagas
 
 1. Presencial em Ponta Grossa
-2. Home office em Ponta Grossa
-3. Home office em Curitiba
-4. Home office no resto do Paraná
-5. Home office em SC/SP/RS
-6. Home office no resto do Brasil
+2. Híbrido em Ponta Grossa
+3. Home office em Ponta Grossa
+4. Home office em Curitiba
+5. Home office no resto do Brasil
+
+Vagas sem modalidade identificada chegam com o aviso "CONFIRA O LOCAL". Vagas de suporte de TI e desenvolvedor júnior só entram se forem presenciais em Ponta Grossa.
 
 ## Testar localmente
 
