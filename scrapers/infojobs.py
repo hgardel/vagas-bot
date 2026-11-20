@@ -56,8 +56,7 @@ def _parse(html: str) -> list[dict]:
     Se quiser refinar isso depois: abre uma dessas páginas de busca no
     navegador, aperta Ctrl+U (ver código-fonte), procura por um dos
     títulos de vaga que aparece na tela, e vê que tag/classe envolve o
-    bloco inteiro do card (título + local + modalidade). Me manda esse
-    trecho de HTML que eu escrevo o seletor certo.
+    bloco inteiro do card (título + local + modalidade).
     """
     jobs = []
     soup = BeautifulSoup(html, "html.parser")
