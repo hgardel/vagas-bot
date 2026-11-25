@@ -2,11 +2,11 @@
 Lógica de decisão: essa vaga interessa ou não, e qual a prioridade dela?
 
 Ordem de prioridade:
-1. Presencial em Ponta Grossa
+1. Home office (qualquer lugar do Brasil)
 2. Híbrido em Ponta Grossa
-3. Home office em Ponta Grossa
-4. Home office em Curitiba
-5. Home office no resto do Brasil
+3. Presencial em Ponta Grossa
+4. Híbrido em São Paulo
+5. Presencial em São Paulo
 """
 import unicodedata
 import re
@@ -83,28 +83,28 @@ def is_relevant(title: str, location: str, modality: str = "") -> tuple[bool, st
 
     modalidade_detectada = _detect_modality(title, location, modality)
     esta_em_pg = "ponta grossa" in location_norm
-    esta_em_curitiba = _has_word(location_norm, "curitiba")
+    esta_em_sp = _has_word(location_norm, "sp") or "sao paulo" in location_norm
     eh_brasil = _looks_brazilian(location)
 
     if location.strip() and not eh_brasil:
         return False, "fora_do_brasil"
 
-    if modalidade_detectada == "presencial":
-        if esta_em_pg:
-            return True, "prioridade_1_presencial_pg"
-        return False, "presencial_fora_de_pg"
+    if modalidade_detectada == "remoto" and is_cyber:
+        return True, "prioridade_1_remoto"
 
     if modalidade_detectada == "hibrido":
         if esta_em_pg:
             return True, "prioridade_2_hibrido_pg"
-        return False, "hibrido_fora_de_pg"
+        if esta_em_sp and is_cyber:
+            return True, "prioridade_4_hibrido_sp"
+        return False, "hibrido_fora_de_pg_sp"
 
-    if modalidade_detectada == "remoto" and is_cyber:
+    if modalidade_detectada == "presencial":
         if esta_em_pg:
-            return True, "prioridade_3_remoto_pg"
-        if esta_em_curitiba:
-            return True, "prioridade_4_remoto_curitiba"
-        return True, "prioridade_5_remoto_brasil"
+            return True, "prioridade_3_presencial_pg"
+        if esta_em_sp and is_cyber:
+            return True, "prioridade_5_presencial_sp"
+        return False, "presencial_fora_de_pg_sp"
 
     if modalidade_detectada == "desconhecido" and (is_cyber or (is_ads and esta_em_pg)):
         return True, "modalidade_desconhecida"
