@@ -25,11 +25,11 @@ def send_telegram(text: str) -> bool:
 
 def format_job_message(job: dict, motivo: str) -> str:
     prioridade_labels = {
-        "prioridade_1_presencial_pg": "🥇 PRESENCIAL EM PG",
+        "prioridade_1_remoto": "🥇 HOME OFFICE (Brasil)",
         "prioridade_2_hibrido_pg": "🥈 HÍBRIDO EM PG",
-        "prioridade_3_remoto_pg": "🥉 HOME OFFICE (Ponta Grossa)",
-        "prioridade_4_remoto_curitiba": "4️⃣ HOME OFFICE (Curitiba)",
-        "prioridade_5_remoto_brasil": "5️⃣ HOME OFFICE (resto do Brasil)",
+        "prioridade_3_presencial_pg": "🥉 PRESENCIAL EM PG",
+        "prioridade_4_hibrido_sp": "4️⃣ HÍBRIDO EM SP",
+        "prioridade_5_presencial_sp": "5️⃣ PRESENCIAL EM SP",
         "modalidade_desconhecida": "❓ CONFIRA O LOCAL NO LINK ABAIXO:",
     }
     label = prioridade_labels.get(motivo, "")
