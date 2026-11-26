@@ -2,6 +2,13 @@ import requests
 from config import TELEGRAM_TOKEN, TELEGRAM_CHAT_ID
 
 
+def _descricao_erro(resp) -> str:
+    try:
+        return resp.json().get("description", "sem descrição")
+    except ValueError:
+        return "sem descrição"
+
+
 def send_telegram(text: str) -> bool:
     if not TELEGRAM_TOKEN or not TELEGRAM_CHAT_ID:
         print("[AVISO] TELEGRAM_TOKEN ou TELEGRAM_CHAT_ID não configurados. Pulando envio.")
@@ -19,9 +26,13 @@ def send_telegram(text: str) -> bool:
         resp = requests.post(url, data=payload, timeout=15)
         resp.raise_for_status()
         return True
-    except Exception as e:
-        print(f"[ERRO] Falha ao enviar mensagem no Telegram: {e}")
+    except requests.HTTPError:
+        print(f"[ERRO] Telegram recusou o envio: HTTP {resp.status_code}, {_descricao_erro(resp)}")
         return False
+    except requests.RequestException as e:
+        print(f"[ERRO] Falha de rede ao enviar mensagem no Telegram: {type(e).__name__}")
+        return False
+
 
 def format_job_message(job: dict, motivo: str) -> str:
     prioridade_labels = {
