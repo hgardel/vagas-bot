@@ -35,6 +35,7 @@ jobs:
         run: python main.py
 
       - name: Salvar vagas já vistas (commit automático)
+        if: always()
         run: |
           git config user.name "vagas-bot"
           git config user.email "vagas-bot@users.noreply.github.com"

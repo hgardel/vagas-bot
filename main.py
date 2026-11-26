@@ -14,6 +14,7 @@ def main():
 
     seen = load_seen()
     novas_encontradas = 0
+    falhas_envio = 0
 
     for scraper_module in SCRAPERS:
         nome = scraper_module.__name__.split(".")[-1]
@@ -42,6 +43,7 @@ def main():
                     print(f"  [NOVA] {job['title']} -> {motivo}")
                     seen.add(job["url"])
                 else:
+                    falhas_envio += 1
                     print(f"  [FALHOU ENVIO] {job['title']} -> vai tentar de novo na próxima rodada")
             else:
                 seen.add(job["url"])
@@ -50,6 +52,10 @@ def main():
 
     save_seen(seen)
     print(f"\nConcluído. {novas_encontradas} vaga(s) nova(s) notificada(s).")
+
+    if falhas_envio and novas_encontradas == 0:
+        print(f"[ERRO] {falhas_envio} envio(s) ao Telegram falharam e nenhuma vaga foi entregue.")
+        sys.exit(1)
 
 
 if __name__ == "__main__":
